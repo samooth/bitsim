@@ -1,9 +1,10 @@
 const Bitsim = require('../index')
 
-const bitsim = new Bitsim()
 
 
 ;(async()=>{
+  const bitsim = new Bitsim({ rpc: 'http://root:bitcoin@127.0.0.1:18332' })
+
   await bitsim.init()
   await bitsim.add(5)
   const mem = await bitsim.getMempool()

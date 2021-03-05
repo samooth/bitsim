@@ -1,6 +1,6 @@
 const axios = require('axios')
-const bsv = require('bsv')
-const Toychain = require('toychain')
+const bsv = require('../bsv')
+const Toychain = require('../toychain')
 const assert = require('assert')
 
 const defaultPrototype = [
@@ -14,16 +14,19 @@ const bip44 = (i) => {
 const config = {
   mine: 1,
   delay: 1000,
-  rpc: 'http://root:bitcoin@127.0.0.1:18332',
-  xpriv: 'xprv9s21ZrQH143K2AUh9yj3SmnzFVpHFgfGh23tz9iQb6p86yee29B1CcUenjSvWUFtNQ6oBho8PwPZNPi758kTFvJnxs1SoYbtUbyZeTK9zBC',
+  rpc: 'http://root:bitcoin@172.22.0.1:18332',
+  xpriv: 'xprv9s21ZrQH143K3fAcSPacRNJEeR9GbjWJVJSqDhBmquzQZMJL1ny56ASedPvX9TJRCSrRCoAGz6RMuSjEHCSv1AQFbx5Cz4w7hZ5rTXApXZU',
 }
 
 class Bitsim {
   constructor(o) {
     this.config = config
     if (o) Object.assign(this.config, o)
-    let zeroKey = bsv.HDPrivateKey.fromString(this.config.xpriv).deriveChild("m/44'/0'/0'/0/0").publicKey
-    this.config.zeroAddress = bsv.Address.fromPublicKey(zeroKey).toString()
+
+    const zeroKey = new bsv.Bip32().fromString(this.config.xpriv).derive("m/44'/0'/0'/0/0").pubKey
+
+    this.config.zeroAddress = bsv.Address.fromPubKey(zeroKey).toString()
+	console.log(this.config.zeroAddress)
     this.toychain = new Toychain({
       xpriv: this.config.xpriv,
       storage: {

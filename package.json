@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
+    "better-sqlite3": "^7.1.2",
     "bsv": "^2.0.5",
     "toychain": "^0.0.1"
   }
