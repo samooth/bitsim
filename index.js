@@ -26,7 +26,6 @@ class Bitsim {
     const zeroKey = new bsv.Bip32().fromString(this.config.xpriv).derive("m/44'/0'/0'/0/0").pubKey
 
     this.config.zeroAddress = bsv.Address.fromPubKey(zeroKey).toString()
-	console.log(this.config.zeroAddress)
     this.toychain = new Toychain({
       xpriv: this.config.xpriv,
       storage: {
